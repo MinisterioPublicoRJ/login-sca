@@ -21,6 +21,7 @@ def test_successful_login(_session):
     expected_data = {'username': username, 'password': 'cGFzc3dvcmQ='}
 
     assert resp.status_code == 200
+    assert resp.content == b''
     session_mock.post.assert_called_once_with(
         auth_url,
         data=expected_data
