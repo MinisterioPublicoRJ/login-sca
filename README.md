@@ -1,7 +1,9 @@
 # Simple module for SCA system login
 
-version number: 0.0.1
+version number: 0.0.1  
 author: CADG
+
+# Overview
 
 This is a Python module which wraps the necessary resquests
 to the SCA system.
@@ -12,11 +14,11 @@ will login and then retrieve information about the user in the system.
 In case only Authentication URL is given, login is executed but no other
 information is returned.
 
-# Instalation
+# Instalation / Usage
 
 To install use pip:
 
-    $ pip install git+https://github.com/rhenanbartels/login-sca
+    $ pip install git+https://github.com/MinisterioPublicoRJ/login-sca
 
 Or clone the repo:
 
