@@ -3,7 +3,7 @@ from base64 import b64encode
 from requests import session
 
 
-def login(username: str, password: bytes, auth_url: str):
+def login(username: str, password: bytes, auth_url: str, info_url: str = None):
     """Login to SCA auth system given the user's username and password
 
     Parameters:
@@ -21,4 +21,11 @@ def login(username: str, password: bytes, auth_url: str):
             'password': b64encode(password).decode('utf-8')
         }
     )
-    return resp
+
+    info = {}
+    if resp.status_code == 200 and info_url is not None:
+        resp_info = s.get(info_url)
+        if resp_info.status_code == 200:
+            info = resp_info.json()
+
+    return resp, info
