@@ -30,7 +30,7 @@ def test_successful_login(_session):
 
 @mock.patch('login_sca.auth.session')
 def test_return_users_info(_session):
-    "Should return a 200 status code and user's info"
+    "Should return a 200 status code and user's info response"
 
     expected_body = '{"username":"anyusername.auth","permissions":{"role_1":'\
                     'true,"role_2":true,"role_3":true},'\
@@ -77,6 +77,11 @@ def test_return_users_info(_session):
 
 @mock.patch('login_sca.auth.session')
 def test_login_failure(_session):
+    """
+    Should test if the request to the info endpoint is not performed
+    in case of auth request fails.
+    """
+
     resp_mock = mock.MagicMock(
         status_code=401,
         content=b'<html>auth failed</html>'
@@ -105,6 +110,11 @@ def test_login_failure(_session):
 
 @mock.patch('login_sca.auth.session')
 def test_get_info_failure(_session):
+    """
+        Should test if correct info response is returned in case of
+        the request to info endpoint fails.
+    """
+
     resp_post_mock = mock.MagicMock(
         status_code=200,
         content=b''
@@ -137,6 +147,8 @@ def test_get_info_failure(_session):
 
 @mock.patch('login_sca.auth.session')
 def test_return_named_tuple(_session):
+    "Should return a namedtuple contaning both auth and info responses"
+
     username = 'wrong_username'
     password = b'wrong_password'
     auth_url = 'http://auth.com'
