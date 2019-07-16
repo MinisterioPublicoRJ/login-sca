@@ -133,3 +133,20 @@ def test_get_info_failure(_session):
     assert resp.status_code == 200
     assert resp.content == b''
     assert resp_info.content == b'<html>Not Found</html>'
+
+
+@mock.patch('login_sca.auth.session')
+def test_return_named_tuple(_session):
+    username = 'wrong_username'
+    password = b'wrong_password'
+    auth_url = 'http://auth.com'
+    info_url = 'http://info.com'
+
+    resp_obj = login(
+        username=username,
+        password=password,
+        auth_url=auth_url,
+        info_url=info_url
+    )
+
+    assert resp_obj._fields == ('auth', 'info')
