@@ -63,7 +63,7 @@ def test_return_users_info(_session):
     session_mock.get.return_value = resp_get_mock
     _session.return_value = session_mock
 
-    resp, info = login(
+    resp, resp_info = login(
         username=username,
         password=password,
         auth_url=auth_url,
@@ -71,7 +71,8 @@ def test_return_users_info(_session):
     )
 
     assert resp.status_code == 200
-    assert info == expected_info
+    assert resp_info.content == expected_body
+    assert resp_info.json() == expected_info
 
 
 @mock.patch('login_sca.auth.session')
@@ -89,7 +90,7 @@ def test_login_failure(_session):
     auth_url = 'http://auth.com'
     info_url = 'http://info.com'
 
-    resp, info = login(
+    resp, resp_info = login(
         username=username,
         password=password,
         auth_url=auth_url,

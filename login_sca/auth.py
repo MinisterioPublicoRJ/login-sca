@@ -22,9 +22,8 @@ def login(username: str, password: bytes, auth_url: str, info_url: str = None):
         }
     )
 
-    info = {}
+    resp_info = None
     if resp.status_code == 200 and info_url is not None:
         resp_info = s.get(info_url)
-        info = resp_info.json()
 
-    return resp, info
+    return resp, resp_info
