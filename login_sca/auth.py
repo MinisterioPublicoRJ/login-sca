@@ -12,6 +12,14 @@ def login(username: str, password: bytes, auth_url: str, info_url: str = None):
     username (str): Username is the SCA system
     password (bytes): User's password as bytes
     auth_url (str): Authentication endpoint
+    info_url (str), optional: User's info endpoint
+
+    Returns:
+
+    resp: namedtuple
+        The responses from auth and info requests. The info response
+        is optional and only will be executed when the parameters info_url
+        if provided.
 
     """
     s = session()
