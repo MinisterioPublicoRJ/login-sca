@@ -99,4 +99,37 @@ def test_login_failure(_session):
 
     assert resp.status_code == 401
     assert resp.content == b'<html>auth failed</html>'
+    assert resp_info is None
     session_mock.get.assert_not_called()
+
+
+@mock.patch('login_sca.auth.session')
+def test_get_info_failure(_session):
+    resp_post_mock = mock.MagicMock(
+        status_code=200,
+        content=b''
+    )
+    resp_get_mock = mock.MagicMock(
+        status_code=404,
+        content=b'<html>Not Found</html>'
+    )
+    session_mock = mock.MagicMock()
+    session_mock.post.return_value = resp_post_mock
+    session_mock.get.return_value = resp_get_mock
+    _session.return_value = session_mock
+
+    username = 'wrong_username'
+    password = b'wrong_password'
+    auth_url = 'http://auth.com'
+    info_url = 'http://info.com'
+
+    resp, resp_info = login(
+        username=username,
+        password=password,
+        auth_url=auth_url,
+        info_url=info_url
+    )
+
+    assert resp.status_code == 200
+    assert resp.content == b''
+    assert resp_info.content == b'<html>Not Found</html>'
